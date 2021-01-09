@@ -1,0 +1,32 @@
+<%- include("../parts/head.ejs") %>
+<%- include("../parts/nav.ejs") %>
+
+<div class="jumbotron text-center" style="direction: rtl;">
+    <h1 class="display-4">Me 4 Life</h1>
+    <p class="lead" style="font-family: 'Almarai', sans-serif;"></p>
+</div>
+
+<h1 class="text-center col-12 pt-4 text-danger">Signup</h1>
+
+<div class="container col-12 col-md-4 p-4">
+    <form id="form">
+        <div class="errMsg text-danger p-3" id="error"></div>
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="first name" name="fname"  id="fname">
+            <input type="text" class="form-control" placeholder="last name" name="lname"  id="lname">
+        </div>
+        <div class="input-group mb-3">
+            <input type="email" class="form-control" placeholder="E-mail" name="email"  id="email">
+        </div>
+        <div class="input-group mb-3">
+            <input type="password" id="password" class="form-control" placeholder="password" name="password" >
+        </div>
+        <div class="text-center mt-2">
+            <button type="submit" class="btn btn-dark">Signup</button>
+        </div>
+    </form>
+</div>
+
+<script src="/signup.js"></script>
+
+<%- include("../parts/footer.ejs") %>
