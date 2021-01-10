@@ -50,8 +50,7 @@ app.use((req, res, next) => {
 })
 
 //use body-parser:
-app.use(bodyParser.urlencoded({ extended: false }));
-
+app.use(bodyParser.json());
 //set view engine:
 app.set('view engine', 'ejs');
 //set public folder:
