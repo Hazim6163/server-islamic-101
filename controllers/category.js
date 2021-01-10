@@ -3,7 +3,7 @@ const Category = require('../models/category').category;
 const add = async (req, res) => {
     try {
         //check if the request has data you need to check when add new model:
-        if (!req.body.name || !req.body.description) {
+        if (!req.body.name) {
             throw ('need more data')
         }
         // create category mongo db model : 
