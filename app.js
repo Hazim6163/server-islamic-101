@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const userRoute = require('./routes/user');
 const mainRoute = require('./routes/router');
+const categoryRoutes = require('./routes/category');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 let sessionStore;
@@ -57,5 +58,7 @@ app.set('view engine', 'ejs');
 app.use(express.static('public'));
 
 app.use('/user', userRoute);
+//use category routes : 
+app.use('/category', categoryRoutes);
 
 app.use('/', mainRoute);
