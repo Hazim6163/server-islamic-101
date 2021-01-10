@@ -10,14 +10,14 @@ const add = async (req, res) => {
     try {
         // create category mongo db model : 
         const category = new Category({
-                name: req.body.text,
-                description: req.body.name
+            name: req.body.text,
+            description: req.body.name
         });
-        if(req.body.parent) category.parent = req.body.parent; 
+        if (req.body.parent) category.parent = req.body.parent;
         await category.save();
         res.status(200).json({ category });
     } catch (error) {
-        res.status(400).json({ error: "category cannot be created" })
+        res.status(400).json(error)
     }
 
 }
@@ -58,7 +58,7 @@ const edit = async (req, res) => {
 const getAll = async (req, res) => {
     try {
         const categories = await Category.find();
-        res.status(200).json( categories );
+        res.status(200).json(categories);
     } catch (error) {
         //send error 
         res.status(400).json(error)
