@@ -2,26 +2,21 @@ const Category = require('../models/category').category;
 
 const add = async (req, res) => {
     console.log(req.body);
-    //check if the request has data you need to check when add new model  ; 
-    //TODO complete the if statement 
-    if (!req.body.text || !req.body.source) {
-        // TODO Set Error Msg
-        res.status(404).json({ error: "error msg" })
+    //check if the request has data you need to check when add new model:
+    if (!req.body.name || !req.body.description) {
+        res.status(404).json({ error: "need more data." })
     }
 
     try {
         // create category mongo db model : 
-        const category = new Category({ 
-            // TODO Create category Model // add schema fields values
-            /****
-                text: req.body.text,
-                name: req.body.name
-            ***/
-         });
+        const category = new Category({
+                name: req.body.text,
+                description: req.body.name
+        });
+        if(req.body.parent) category.parent = req.body.parent; 
         await category.save();
         res.status(200).json({ category });
     } catch (error) {
-        // TODO set error msg 
         res.status(400).json({ error: "category cannot be created" })
     }
 
@@ -37,19 +32,20 @@ const edit = async (req, res) => {
         const id = req.body.id;
         const category = await Category.findById(id);
 
-        // here is example of update text of quote
-        if (req.body.text) {
-            quote.text = req.body.text;
+        // here is example of update name of category
+        if (req.body.name) {
+            category.name = req.body.name;
         }
-        //here is another example of edit source of quote
-        if (req.body.source) {
-            quote.source = req.body.source;
+        if (req.body.description) {
+            category.source = req.body.description;
         }
-        //TODO and so on add if statement for all fields 
+        if (req.body.parent) {
+            category.parent = req.body.parent;
+        }
         //save updated obj 
         await category.save();
         //send response back 
-        res.status(200).json(quote);
+        res.status(200).json(category);
 
 
     } catch (error) {
@@ -61,8 +57,8 @@ const edit = async (req, res) => {
 //get all model 
 const getAll = async (req, res) => {
     try {
-        const categorys = await Category.find();
-        res.status(200).json( categorys );
+        const categories = await Category.find();
+        res.status(200).json( categories );
     } catch (error) {
         //send error 
         res.status(400).json(error)
