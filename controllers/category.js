@@ -10,8 +10,8 @@ const add = async (req, res) => {
     try {
         // create category mongo db model : 
         const category = new Category({
-            name: req.body.text,
-            description: req.body.name
+            name: req.body.name,
+            description: req.body.description
         });
         if (req.body.parent) category.parent = req.body.parent;
         await category.save();
