@@ -71,7 +71,7 @@ const getById = async (req, res) => {
         if (!req.query.id) {
             throw ("need id to get by id");
         }
-        const category = await Category.findById(req.body.id);
+        const category = await Category.findById(req.query.id);
         res.status(200).json(category);
     } catch (error) {
         //send error 
@@ -85,7 +85,7 @@ const deleteById = async (req, res) => {
         console.log(req.query)
         // check id
         if (!req.query.id) { throw ("need id to delete") }
-        const category = await Category.findById(req.body.id);
+        const category = await Category.findById(req.query.id);
         await category.remove();
         res.status(200).json({ deleted: true, category })
     } catch (error) {
