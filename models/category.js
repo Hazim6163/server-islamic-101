@@ -6,7 +6,8 @@ const Schema = new mongoose.Schema({
     // String field
     name: { type: String, required: true },
     parent: { type: String },
-    description: { type: String }
+    description: { type: String },
+    level: { type: Number, required: true }
 
 });
 

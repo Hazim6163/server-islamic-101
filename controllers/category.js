@@ -6,10 +6,16 @@ const add = async (req, res) => {
         if (!req.body.name) {
             throw ('need more data')
         }
+
+        //init level 
+        let level = 0;
+        if (req.body.parent) level = await extractCategoryLevel(req.body.parent);
+
         // create category mongo db model : 
         const category = new Category({
             name: req.body.name,
-            description: req.body.description
+            description: req.body.description,
+            level
         });
         if (req.body.parent) category.parent = req.body.parent;
         await category.save();
@@ -18,6 +24,18 @@ const add = async (req, res) => {
         res.status(400).json(error)
     }
 
+}
+
+async function extractCategoryLevel(pName) {
+    //init level:
+    let level = 0;
+    if (pName && pName.length > 0) {
+        //get parent : 
+        const parent = await Category.findOne({ name: pName });
+        //get parent level : 
+        level = parent.level + 1;
+    }
+    return level;
 }
 
 const edit = async (req, res) => {
@@ -31,7 +49,11 @@ const edit = async (req, res) => {
         const id = req.body.id;
         const category = await Category.findById(id);
 
-        // here is example of update name of category
+        //init level 
+        let level = 0;
+        if (req.body.parent) level = await extractCategoryLevel(req.body.parent);
+
+        //update name of category
         if (req.body.name) {
             category.name = req.body.name;
         }
