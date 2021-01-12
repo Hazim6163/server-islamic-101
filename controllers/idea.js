@@ -1,28 +1,23 @@
 const Idea = require('../models/idea').idea;
 
 const add = async (req, res) => {
-    console.log(req.body);
-    //check if the request has data you need to check when add new model  ; 
-    //TODO complete the if statement 
-    if (!req.body.text || !req.body.source) {
-        // TODO Set Error Msg
-        res.status(404).json({ error: "error msg" })
-    }
 
     try {
+        if (!req.body.name) {
+            throw ('need idea name')
+        }
         // create idea mongo db model : 
-        const idea = new Idea({ 
-            // TODO Create idea Model // add schema fields values
-            /****
-                text: req.body.text,
-                name: req.body.name
-            ***/
-         });
+        const idea = new Idea({
+            name: req.body.name
+        });
+        if (req.body.description) idea.description = req.body.description
+        if (req.body.source) idea.source = req.body.source
+        if (req.body.parent) idea.parent = req.body.parent
+
         await idea.save();
-        res.status(200).json({ idea });
+        res.status(200).json(idea);
     } catch (error) {
-        // TODO set error msg 
-        res.status(400).json({ error: "idea cannot be created" })
+        res.status(400).json(error)
     }
 
 }
@@ -33,25 +28,27 @@ const edit = async (req, res) => {
         if (!req.body.id) {
             throw ("need idea id to update")
         }
-
         const id = req.body.id;
         const idea = await Idea.findById(id);
-
-        // here is example of update text of quote
-        if (req.body.text) {
-            quote.text = req.body.text;
+        // update name of idea
+        if (req.body.name) {
+            idea.name = req.body.name;
         }
-        //here is another example of edit source of quote
+        //edit source of idea
         if (req.body.source) {
-            quote.source = req.body.source;
+            idea.source = req.body.source;
         }
-        //TODO and so on add if statement for all fields 
-        //save updated obj 
+        //edit description of idea
+        if (req.body.description) {
+            idea.description = req.body.description;
+        }
+        //edit parent of idea
+        if (req.body.parent) {
+            idea.parent = req.body.parent;
+        }
         await idea.save();
         //send response back 
-        res.status(200).json(quote);
-
-
+        res.status(200).json(idea);
     } catch (error) {
         //send error 
         res.status(400).json(error)
@@ -62,7 +59,7 @@ const edit = async (req, res) => {
 const getAll = async (req, res) => {
     try {
         const ideas = await Idea.find();
-        res.status(200).json( ideas );
+        res.status(200).json(ideas);
     } catch (error) {
         //send error 
         res.status(400).json(error)
@@ -74,10 +71,10 @@ const getAll = async (req, res) => {
 const getById = async (req, res) => {
     try {
         //check id in request : 
-        if (!req.body.id) {
+        if (!req.query.id) {
             throw ("need id to get by id");
         }
-        const idea = await Idea.findById(req.body.id);
+        const idea = await Idea.findById(req.query.id);
         res.status(200).json(idea);
     } catch (error) {
         //send error 
@@ -89,8 +86,8 @@ const getById = async (req, res) => {
 const deleteById = async (req, res) => {
     try {
         // check id
-        if (!req.body.id) { throw ("need id to delete") }
-        const idea = await Idea.findById(req.body.id);
+        if (!req.query.id) { throw ("need id to delete") }
+        const idea = await Idea.findById(req.query.id);
         await idea.remove();
         res.status(200).json({ deleted: true, idea })
     } catch (error) {

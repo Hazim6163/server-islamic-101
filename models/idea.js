@@ -3,18 +3,11 @@ const mongooseTimeStamp = require('mongoose-timestamp');
 
 
 const Schema = new mongoose.Schema({
-    // String field //TODO
-    textField: { type: String, required: true },
-    // Number field
-    numberField: { type: Number },
-    // objField
-    ObjField:{
-        prop1: { type: String, required: true },
-        prop1: { type: Number, required: true },
-    } ,
-    // refrenced field 
-    RefField: { type: mongoose.Types.ObjectId, ref: 'refrenced Model Name UserCard... ' }
-    
+    name: { type: String, required: true },
+    description: { type: String },
+    parent: { type: String },
+    source: { type: String },
+
 });
 
 // attach mongoose Time stamp

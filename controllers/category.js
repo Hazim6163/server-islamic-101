@@ -21,6 +21,7 @@ const add = async (req, res) => {
 }
 
 const edit = async (req, res) => {
+    console.log('edit category request')
     try {
         //check if the request has the data we need : 
         if (!req.body.id) {
@@ -35,7 +36,7 @@ const edit = async (req, res) => {
             category.name = req.body.name;
         }
         if (req.body.description) {
-            category.source = req.body.description;
+            category.description = req.body.description;
         }
         if (req.body.parent) {
             category.parent = req.body.parent;
@@ -66,6 +67,7 @@ const getAll = async (req, res) => {
 // get one model obj by id : 
 
 const getById = async (req, res) => {
+    console.log('getById request')
     try {
         //check id in request : 
         if (!req.query.id) {

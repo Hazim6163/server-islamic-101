@@ -4,11 +4,11 @@ const controller = require('../controllers/idea');
 const tokenValidate = require('../token_validate');
 
 
-router.post('/add', tokenValidate, controller.add);
-router.post('/edit', controller.edit);
-router.get('/all', controller.getAll);
-router.get('/id', controller.getById);
-router.get('/delete', controller.deleteById);
+router.post('/api/add', controller.add);
+router.post('/api/edit', controller.edit);
+router.get('/api/all', controller.getAll);
+router.get('/api/id', controller.getById);
+router.get('/api/delete', controller.deleteById);
 
 
 module.exports = router;

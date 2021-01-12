@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const userRoute = require('./routes/user');
 const mainRoute = require('./routes/router');
 const categoryRoutes = require('./routes/category');
+const ideaRoutes = require('./routes/idea');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 let sessionStore;
@@ -59,5 +60,7 @@ app.use(express.static('public'));
 app.use('/user', userRoute);
 //use category routes : 
 app.use('/category', categoryRoutes);
+//use idea routes : 
+app.use('/idea', ideaRoutes);
 
 app.use('/', mainRoute);
