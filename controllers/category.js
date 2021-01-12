@@ -1,4 +1,5 @@
 const Category = require('../models/category').category;
+const Idea = require('../models/idea').idea;
 
 const add = async (req, res) => {
     try {
@@ -85,6 +86,50 @@ const getAll = async (req, res) => {
         res.status(400).json(error)
     }
 }
+//get reich categories  
+const reichCategories = async (req, res) => {
+    try {
+
+        const reichArr = [];
+        const categories = await Category.find();
+        const ideas = await Idea.find();
+        for (let i = 0; i < categories.length; i++) {
+            const category = categories[i];
+            const cCategory = reichArr.find((c) => {
+                return c.name === category.name
+            })
+            if (cCategory) continue;
+
+            // __ ___  ___ _ ___ get category cats children.  ____ _ __ _ __ _ 
+            for (let i = 0; i < categories.length; i++) {
+                const child = categories[i];
+                if (child.parent === category.name) {
+                    //check if the category has the cats array: 
+                    if (!category.cats) category.cats = []
+                    //append to cats : 
+                    category.cats.push(child);
+                    category.catsCount++;
+                }
+            }
+
+
+            ideas.forEach(idea => {
+                if (idea.parent && idea.parent === category.name) {
+                    category.ideas.push(idea);
+                    category.ideasCount++;
+                }
+            });
+
+            //push reich category : 
+            if (category.level == 0) reichArr.push(category);
+
+        }
+        res.status(200).json(reichArr)
+    } catch (error) {
+        //send error 
+        res.status(400).json(error)
+    }
+}
 
 // get one model obj by id : 
 
@@ -123,5 +168,6 @@ module.exports = {
     edit,
     getAll,
     getById,
-    deleteById
+    deleteById,
+    reichCategories,
 }

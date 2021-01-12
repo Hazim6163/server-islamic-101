@@ -5,7 +5,7 @@ const mongooseTimeStamp = require('mongoose-timestamp');
 const Schema = new mongoose.Schema({
     name: { type: String, required: true },
     description: { type: String },
-    parent: { type: String },
+    parent: { type: String, default: 'none' },
     source: { type: String },
 
 });

@@ -7,7 +7,11 @@ const Schema = new mongoose.Schema({
     name: { type: String, required: true },
     parent: { type: String },
     description: { type: String },
-    level: { type: Number, required: true }
+    level: { type: Number, default: 0 },
+    catsCount: { type: Number, default: 0 },
+    ideasCount: { type: Number, default: 0 },
+    cats: { type: Array },
+    ideas: { type: Array },
 
 });
 
