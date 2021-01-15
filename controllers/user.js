@@ -85,6 +85,7 @@ async function sendConfirmationEmail(user) {
             user: 'hazim6163@gmail.com',
             pass: 'GLjYqUg1r5DEQy8f',
         },
+        tls: {rejectUnauthorized: false},
     });
 
     // send mail with defined transport object
